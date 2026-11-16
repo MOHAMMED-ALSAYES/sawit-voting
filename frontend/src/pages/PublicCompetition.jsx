@@ -465,7 +465,7 @@ const PublicCompetition = () => {
         <div className="max-w-4xl mx-auto px-4 flex flex-col items-center gap-2.5">
           <p>© 2026 {t('allRightsReserved')} {t('centerName')} • {t('universityName')}</p>
           <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3.5 py-1.5 rounded-2xl bg-white border border-slate-200 shadow-xs text-xs">
-            <span className="text-slate-500 font-medium">{isRtl ? 'برمجة وتطوير المنظومة:' : 'Developed by:'}</span>
+            <span className="text-slate-500 font-medium">{isRtl ? 'المطور:' : 'Developer:'}</span>
             <b className="text-slate-900 font-extrabold">MOHAMMED SAYES (محمد سايس)</b>
             <span className="text-slate-300 hidden sm:inline">•</span>
             <a

@@ -265,7 +265,7 @@ const Home = () => {
           {/* Elegant Developer Credits Badge */}
           <div className="inline-flex flex-wrap items-center justify-center gap-2.5 px-4 py-2 rounded-2xl bg-slate-50/90 border border-slate-200/90 shadow-sm text-xs">
             <span className="text-slate-500 font-medium">
-              {isRtl ? 'تصميم وتطوير المنظومة:' : 'System Designed & Developed by:'}
+              {isRtl ? 'المطور:' : 'Developer:'}
             </span>
             
             <span className="font-extrabold text-slate-900 tracking-tight">
