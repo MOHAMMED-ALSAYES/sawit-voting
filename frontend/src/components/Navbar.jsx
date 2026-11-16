@@ -14,13 +14,13 @@ const Navbar = ({ isAdmin = false }) => {
           <div className="flex items-center gap-2.5 sm:gap-3">
             <img 
               src="/logo-cdc.png" 
-              alt="شعار مركز الاستشارات والتنمية CDC" 
+              alt="CDC Logo" 
               className="h-11 sm:h-12 w-auto object-contain hover:scale-105 transition-transform" 
             />
             <div className="h-7 w-[1px] bg-slate-300"></div>
             <img 
               src="/logo-ust.png" 
-              alt="شعار جامعة العلوم والتكنولوجيا UST" 
+              alt="UST Logo" 
               className="h-11 sm:h-12 w-auto object-contain hover:scale-105 transition-transform" 
             />
           </div>
@@ -29,10 +29,10 @@ const Navbar = ({ isAdmin = false }) => {
             <h1 className="text-base sm:text-xl font-black text-slate-900 tracking-tight flex items-center gap-1.5">
               <span className="text-cdc-cyan">SAWIT</span>
               <span className="text-cdc-orange">|</span>
-              <span className="text-slate-800">صَوّت</span>
+              <span className="text-slate-800">{lang === 'ar' ? 'صَوّت' : 'Vote'}</span>
             </h1>
             <p className="text-[10px] sm:text-xs text-slate-500 font-semibold truncate max-w-[200px] sm:max-w-none">
-              منصة المسابقات والتصويت الإلكتروني
+              {t('headerDesc')}
             </p>
           </div>
         </div>
@@ -41,7 +41,7 @@ const Navbar = ({ isAdmin = false }) => {
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={toggleLanguage}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100 transition-all shadow-sm"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100 transition-all shadow-sm"
           >
             <Globe className="w-3.5 h-3.5 text-cdc-cyan" />
             <span>{lang === 'ar' ? 'English' : 'عربي'}</span>
@@ -54,7 +54,7 @@ const Navbar = ({ isAdmin = false }) => {
             >
               <UserCheck className="w-3.5 h-3.5 text-cdc-cyan" />
               <span className="hidden sm:inline">{t('login')}</span>
-              <span className="sm:hidden">الإدارة</span>
+              <span className="sm:hidden">{t('adminShort')}</span>
             </a>
           )}
         </div>
