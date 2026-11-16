@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api from '../services/api';
 import { 
@@ -243,6 +244,15 @@ const Home = () => {
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
               {t('visionMissionDesc')}
             </p>
+            <div className="pt-2">
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cdc-cyan hover:bg-cdc-cyan-hover text-white text-xs font-bold shadow-md transition-all active:scale-95"
+              >
+                <span>{isRtl ? 'استكشاف دليل المركز والـ 16 برنامجاً معتمداً' : 'Explore All 16 Center Programs & Profile'}</span>
+                {isRtl ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
+              </Link>
+            </div>
           </div>
 
           <div className="shrink-0 flex items-center gap-3 sm:gap-4 bg-white/10 p-3 sm:p-4 rounded-2xl border border-white/10">

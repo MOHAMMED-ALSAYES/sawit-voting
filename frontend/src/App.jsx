@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { LanguageProvider } from './contexts/LanguageContext';
 import Home from './pages/Home';
+import AboutCenter from './pages/AboutCenter';
 import PublicCompetition from './pages/PublicCompetition';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutCenter />} />
           <Route path="/c/:slug" element={<PublicCompetition />} />
           <Route path="/admin/login" element={<AdminLogin />} />
 
