@@ -461,20 +461,24 @@ const PublicCompetition = () => {
       )}
 
       {/* Footer */}
-      <footer className="py-6 border-t border-slate-200 bg-white/50 text-center text-[11px] sm:text-xs text-slate-500 mt-auto space-y-1.5">
-        <p>© 2026 {t('allRightsReserved')} {t('centerName')} • {t('universityName')}</p>
-        <div className="text-[10px] sm:text-[11px] text-slate-600 flex items-center justify-center gap-2 flex-wrap">
-          <span>{isRtl ? 'برمجة وتطوير المنظومة:' : 'Developed by:'}</span>
-          <b className="text-slate-900 font-bold">MOHAMMED SAYES (محمد الصايص)</b>
-          <span className="text-slate-300">•</span>
-          <a
-            href="https://wa.me/967730116384"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-cdc-cyan hover:underline font-mono font-bold"
-          >
-            730116384
-          </a>
+      <footer className="py-6 border-t border-slate-200 bg-white/60 backdrop-blur-sm text-center text-xs text-slate-500 mt-auto">
+        <div className="max-w-4xl mx-auto px-4 flex flex-col items-center gap-2.5">
+          <p>© 2026 {t('allRightsReserved')} {t('centerName')} • {t('universityName')}</p>
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3.5 py-1.5 rounded-2xl bg-white border border-slate-200 shadow-xs text-xs">
+            <span className="text-slate-500 font-medium">{isRtl ? 'برمجة وتطوير المنظومة:' : 'Developed by:'}</span>
+            <b className="text-slate-900 font-extrabold">MOHAMMED SAYES (محمد سايس)</b>
+            <span className="text-slate-300 hidden sm:inline">•</span>
+            <a
+              href="https://wa.me/967730116384"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 font-bold font-mono text-xs transition-all hover:scale-105"
+              title="واتساب"
+            >
+              <MessageCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span>730116384</span>
+            </a>
+          </div>
         </div>
       </footer>
     </div>

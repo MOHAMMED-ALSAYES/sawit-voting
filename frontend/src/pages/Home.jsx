@@ -11,7 +11,8 @@ import {
   Compass, 
   GraduationCap, 
   Building2, 
-  Sparkles
+  Sparkles,
+  MessageCircle
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -254,21 +255,37 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-6 sm:py-8 border-t border-slate-200/80 bg-white/90 backdrop-blur-md text-center text-xs text-slate-500 relative z-10 space-y-2">
-        <p>© 2026 {t('allRightsReserved')} <b>{t('centerName')}</b> • <b>{t('universityName')}</b></p>
-        <div className="text-[11px] text-slate-600 flex items-center justify-center gap-2 flex-wrap pt-1 border-t border-slate-100 max-w-xl mx-auto">
-          <span>{isRtl ? 'تصميم وتطوير المنظومة:' : 'System Designed & Developed by:'}</span>
-          <b className="text-slate-900 font-extrabold">MOHAMMED SAYES | م. محمد الصايص</b>
-          <span className="text-slate-300">•</span>
-          <a 
-            href="https://wa.me/967730116384" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 font-mono text-cdc-cyan hover:text-cdc-cyan-hover font-bold hover:underline"
-            title="تواصل مع المطور"
-          >
-            <span>730116384</span>
-          </a>
+      <footer className="py-8 border-t border-slate-200/80 bg-white/95 backdrop-blur-md text-center text-xs text-slate-500 relative z-10">
+        <div className="max-w-4xl mx-auto px-4 flex flex-col items-center gap-3">
+          
+          <p className="text-slate-500">
+            © 2026 {t('allRightsReserved')} <b className="text-slate-800">{t('centerName')}</b> • <b className="text-slate-800">{t('universityName')}</b>
+          </p>
+
+          {/* Elegant Developer Credits Badge */}
+          <div className="inline-flex flex-wrap items-center justify-center gap-2.5 px-4 py-2 rounded-2xl bg-slate-50/90 border border-slate-200/90 shadow-sm text-xs">
+            <span className="text-slate-500 font-medium">
+              {isRtl ? 'تصميم وتطوير المنظومة:' : 'System Designed & Developed by:'}
+            </span>
+            
+            <span className="font-extrabold text-slate-900 tracking-tight">
+              MOHAMMED SAYES (محمد سايس)
+            </span>
+
+            <span className="text-slate-300 hidden sm:inline">•</span>
+
+            <a
+              href="https://wa.me/967730116384"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 font-bold font-mono text-xs transition-all hover:scale-105 active:scale-95 shadow-sm"
+              title="تواصل مع المطور عبر واتساب أو اتصال"
+            >
+              <MessageCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span>730116384</span>
+            </a>
+          </div>
+
         </div>
       </footer>
 
