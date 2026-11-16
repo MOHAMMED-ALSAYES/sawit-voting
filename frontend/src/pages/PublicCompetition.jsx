@@ -30,6 +30,7 @@ const PublicCompetition = () => {
   // Voting Wizard Steps: 1: Overview & WhatsApp Gateway, 2: Select Student, 3: Success Screen
   const [step, setStep] = useState(1);
   const [whatsappVisited, setWhatsappVisited] = useState(false);
+  const [whatsappWarning, setWhatsappWarning] = useState('');
   const [selectedParticipant, setSelectedParticipant] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [submittingVote, setSubmittingVote] = useState(false);
@@ -49,7 +50,6 @@ const PublicCompetition = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // Parallel fetching for high performance
         const [compRes, partsRes] = await Promise.all([
           api.get(`/public/competitions/${slug}`),
           api.get(`/public/competitions/${slug}/participants`)
@@ -80,10 +80,19 @@ const PublicCompetition = () => {
   }, [slug]);
 
   const handleOpenWhatsapp = () => {
-    if (competition?.whatsapp_channel_url) {
-      window.open(competition.whatsapp_channel_url, '_blank', 'noopener,noreferrer');
-      setWhatsappVisited(true);
+    const targetUrl = competition?.whatsapp_channel_url || 'https://whatsapp.com';
+    window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    setWhatsappVisited(true);
+    setWhatsappWarning('');
+  };
+
+  const handleContinueClick = () => {
+    if (!whatsappVisited) {
+      // إظهار تنبيه وهمي بأن شرط الانتقال إلى صفحة التصويت هو النقر وزيارة القناة
+      setWhatsappWarning(t('whatsappMandatoryNotice'));
+      return;
     }
+    setStep(2);
   };
 
   const handleVoteSubmit = async () => {
@@ -141,7 +150,7 @@ const PublicCompetition = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-sky-50/30 to-slate-100 flex flex-col pt-24 pb-12">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-sky-50/30 to-slate-100 flex flex-col pt-24 sm:pt-28 pb-12">
       <Navbar />
 
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6">
@@ -182,11 +191,15 @@ const PublicCompetition = () => {
             </div>
 
             {/* WhatsApp Channel Gateway */}
-            <div className="bg-gradient-to-br from-white to-emerald-50/50 rounded-3xl p-5 sm:p-8 shadow-sm border border-emerald-200 relative">
+            <div className={`bg-gradient-to-br from-white to-emerald-50/50 rounded-3xl p-5 sm:p-8 shadow-sm border transition-all duration-300 relative ${
+              whatsappWarning ? 'border-amber-400 ring-2 ring-amber-200' : 'border-emerald-200'
+            }`}>
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md">
+                  <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-white flex items-center justify-center shrink-0 shadow-md transition-all ${
+                    whatsappWarning ? 'bg-amber-500 animate-bounce' : 'bg-emerald-500'
+                  }`}>
                     <MessageCircle className="w-6 h-6 sm:w-8 sm:h-8" />
                   </div>
                   <div>
@@ -202,30 +215,50 @@ const PublicCompetition = () => {
                 <div className="w-full sm:w-auto flex flex-col gap-2">
                   <button
                     onClick={handleOpenWhatsapp}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all active:scale-95"
+                    className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm shadow-md transition-all active:scale-95 text-white ${
+                      whatsappVisited 
+                        ? 'bg-emerald-700 hover:bg-emerald-800' 
+                        : whatsappWarning 
+                        ? 'bg-emerald-600 hover:bg-emerald-700 ring-4 ring-emerald-300 animate-pulse'
+                        : 'bg-emerald-600 hover:bg-emerald-700'
+                    }`}
                   >
                     <MessageCircle className="w-4 h-4" />
                     <span>{t('goToWhatsapp')}</span>
                   </button>
 
                   {whatsappVisited && (
-                    <span className="text-[11px] text-emerald-700 font-semibold text-center flex items-center justify-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span className="text-[11px] text-emerald-700 font-semibold text-center flex items-center justify-center gap-1 animate-in fade-in">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                       <span>{t('whatsappVisitedNotice')}</span>
                     </span>
                   )}
                 </div>
               </div>
 
+              {/* Fake Mandatory WhatsApp Prompt / Warning Message */}
+              {whatsappWarning && (
+                <div className="mt-5 p-4 rounded-2xl bg-amber-50 border-2 border-amber-300 text-amber-900 text-xs sm:text-sm font-bold flex items-start sm:items-center gap-3 animate-in fade-in slide-in-from-top-2 shadow-sm">
+                  <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5 sm:mt-0" />
+                  <div className="flex-1">
+                    <p>{whatsappWarning}</p>
+                    <p className="text-[11px] font-semibold text-amber-700 mt-1">
+                      {isRtl 
+                        ? '👈 اضغط على الزر الأخضر (الانتقال إلى قناة واتساب) أولاً لتتمكن من المتابعة' 
+                        : '👈 Please click the green (Visit WhatsApp Channel) button above first to unlock'}
+                    </p>
+                  </div>
+                </div>
+              )}
+
               {/* Continue to Vote Button */}
               <div className="mt-8 pt-6 border-t border-slate-200/80 flex justify-end">
                 <button
-                  onClick={() => setStep(2)}
-                  disabled={!whatsappVisited && competition.status !== 'active'}
+                  onClick={handleContinueClick}
                   className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm transition-all shadow-md ${
                     whatsappVisited
-                      ? 'bg-cdc-cyan hover:bg-cdc-cyan-hover text-white scale-100'
-                      : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                      ? 'bg-cdc-cyan hover:bg-cdc-cyan-hover text-white scale-100 shadow-sky-200'
+                      : 'bg-slate-800 hover:bg-slate-900 text-white'
                   }`}
                 >
                   <span>{t('continueToVote')}</span>
