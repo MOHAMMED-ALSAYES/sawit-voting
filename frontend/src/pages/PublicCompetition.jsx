@@ -461,8 +461,21 @@ const PublicCompetition = () => {
       )}
 
       {/* Footer */}
-      <footer className="py-6 border-t border-slate-200 bg-white/50 text-center text-[11px] sm:text-xs text-slate-500 mt-auto">
+      <footer className="py-6 border-t border-slate-200 bg-white/50 text-center text-[11px] sm:text-xs text-slate-500 mt-auto space-y-1.5">
         <p>© 2026 {t('allRightsReserved')} {t('centerName')} • {t('universityName')}</p>
+        <div className="text-[10px] sm:text-[11px] text-slate-600 flex items-center justify-center gap-2 flex-wrap">
+          <span>{isRtl ? 'برمجة وتطوير المنظومة:' : 'Developed by:'}</span>
+          <b className="text-slate-900 font-bold">MOHAMMED SAYES (محمد الصايص)</b>
+          <span className="text-slate-300">•</span>
+          <a
+            href="https://wa.me/967730116384"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-cdc-cyan hover:underline font-mono font-bold"
+          >
+            730116384
+          </a>
+        </div>
       </footer>
     </div>
   );

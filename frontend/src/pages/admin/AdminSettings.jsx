@@ -227,6 +227,36 @@ const AdminSettings = () => {
           </form>
         </div>
 
+        {/* System & Developer Credits Card */}
+        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-2xl bg-sky-100 text-cdc-cyan flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-slate-900">معلومات المنظومة والملكية الفكرية</h3>
+              <p className="text-xs text-slate-500">حقوق التصميم والبرمجة والتطوير التقني للمنصة</p>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p className="text-xs text-slate-500">المهندس المطور للمنظومة:</p>
+              <h4 className="text-sm font-extrabold text-slate-900">MOHAMMED SAYES (م. محمد الصايص)</h4>
+              <p className="text-[11px] text-slate-500 mt-0.5">منصة صَوّت SAWIT | لمركز الاستشارات والتنمية - جامعة العلوم والتكنولوجيا</p>
+            </div>
+
+            <a
+              href="https://wa.me/967730116384"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-mono text-xs font-bold shadow-sm transition-all"
+            >
+              <span>واتساب / اتصال: 730116384</span>
+            </a>
+          </div>
+        </div>
+
       </div>
     </AdminLayout>
   );

@@ -92,12 +92,32 @@ def get_dashboard_stats(
     total_students = db.query(Student).count()
     total_votes = db.query(Vote).count()
 
-    latest_logs = (
-        db.query(AuditLog)
-        .order_by(AuditLog.created_at.desc())
-        .limit(10)
-        .all()
-    )
+    recent_comps = db.query(Competition).order_by(Competition.created_at.desc()).limit(6).all()
+    comps_data = []
+    for c in recent_comps:
+        p_count = db.query(Participant).filter(Participant.competition_id == c.id).count()
+        v_count = db.query(Vote).filter(Vote.competition_id == c.id).count()
+        comps_data.append({
+            "id": c.id,
+            "title": c.title,
+            "slug": c.slug,
+            "status": c.status,
+            "participant_count": p_count,
+            "total_votes": v_count,
+            "end_at": c.end_at.isoformat() if c.end_at else None,
+            "created_at": c.created_at.isoformat() if c.created_at else None
+        })
+
+    recent_students = db.query(Student).order_by(Student.created_at.desc()).limit(8).all()
+    students_data = [
+        {
+            "id": s.id,
+            "full_name": s.full_name,
+            "student_code": s.student_code,
+            "created_at": s.created_at.isoformat() if s.created_at else None
+        }
+        for s in recent_students
+    ]
 
     return {
         "stats": {
@@ -106,17 +126,8 @@ def get_dashboard_stats(
             "total_students": total_students,
             "total_votes": total_votes,
         },
-        "latest_logs": [
-            {
-                "id": log.id,
-                "action": log.action,
-                "entity_type": log.entity_type,
-                "entity_id": log.entity_id,
-                "details": log.details,
-                "created_at": log.created_at.isoformat()
-            }
-            for log in latest_logs
-        ]
+        "competitions": comps_data,
+        "students": students_data
     }
 
 @router.get("/audit-logs", response_model=list[AuditLogOut])

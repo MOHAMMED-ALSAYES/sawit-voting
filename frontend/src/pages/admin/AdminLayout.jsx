@@ -99,6 +99,24 @@ const AdminLayout = ({ children, activeTab = 'dashboard' }) => {
           })}
         </nav>
 
+        {/* Developer Credit */}
+        <div className="px-3 py-2.5 mx-3 mb-2 rounded-xl bg-slate-800/80 border border-slate-700/60 text-[10px]">
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-slate-400 font-semibold">تطوير وبرمجة:</span>
+            <span className="text-[9px] px-1.5 py-0.5 rounded bg-cdc-cyan/20 text-cdc-cyan font-bold">المطور</span>
+          </div>
+          <p className="text-white font-extrabold text-xs">MOHAMMED SAYES</p>
+          <p className="text-slate-400 text-[10px]">م. محمد الصايص</p>
+          <a
+            href="https://wa.me/967730116384"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 font-mono text-[11px] font-bold border border-emerald-500/30 transition-colors"
+          >
+            <span>واتساب: 730116384</span>
+          </a>
+        </div>
+
         {/* Admin Footer & Logout */}
         <div className="p-4 border-t border-slate-800 space-y-3">
           <div className="flex items-center justify-between px-1">
@@ -153,6 +171,24 @@ const AdminLayout = ({ children, activeTab = 'dashboard' }) => {
         <div className="p-4 sm:p-6 lg:p-8 flex-1">
           {children}
         </div>
+
+        {/* Admin Footer */}
+        <footer className="px-6 py-4 border-t border-slate-200 bg-white text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p>© 2026 مركز الاستشارات والتنمية • جامعة العلوم والتكنولوجيا</p>
+          <div className="flex items-center gap-2 text-[11px] text-slate-600">
+            <span>تطوير وبرمجة المنظومة:</span>
+            <b className="text-slate-900 font-bold">MOHAMMED SAYES (محمد الصايص)</b>
+            <span>•</span>
+            <a
+              href="https://wa.me/967730116384"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cdc-cyan hover:underline font-mono font-bold"
+            >
+              730116384
+            </a>
+          </div>
+        </footer>
       </main>
 
     </div>

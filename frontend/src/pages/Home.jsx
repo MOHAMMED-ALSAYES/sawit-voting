@@ -254,8 +254,22 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-6 sm:py-8 border-t border-slate-200/80 bg-white/90 backdrop-blur-md text-center text-xs text-slate-500 relative z-10">
+      <footer className="py-6 sm:py-8 border-t border-slate-200/80 bg-white/90 backdrop-blur-md text-center text-xs text-slate-500 relative z-10 space-y-2">
         <p>© 2026 {t('allRightsReserved')} <b>{t('centerName')}</b> • <b>{t('universityName')}</b></p>
+        <div className="text-[11px] text-slate-600 flex items-center justify-center gap-2 flex-wrap pt-1 border-t border-slate-100 max-w-xl mx-auto">
+          <span>{isRtl ? 'تصميم وتطوير المنظومة:' : 'System Designed & Developed by:'}</span>
+          <b className="text-slate-900 font-extrabold">MOHAMMED SAYES | م. محمد الصايص</b>
+          <span className="text-slate-300">•</span>
+          <a 
+            href="https://wa.me/967730116384" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 font-mono text-cdc-cyan hover:text-cdc-cyan-hover font-bold hover:underline"
+            title="تواصل مع المطور"
+          >
+            <span>730116384</span>
+          </a>
+        </div>
       </footer>
 
     </div>
