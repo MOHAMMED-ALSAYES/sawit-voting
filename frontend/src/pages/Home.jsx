@@ -223,11 +223,21 @@ const Home = () => {
         <div className="mt-8 sm:mt-10 p-6 sm:p-10 rounded-3xl bg-gradient-to-r from-slate-900 via-ust-navy to-slate-900 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl text-center md:text-start">
             <h3 className="text-lg sm:text-2xl font-black text-white flex items-center justify-center md:justify-start gap-2">
-              <span>{t('visionMissionTitlePrefix')}</span>
-              <span className="text-cdc-cyan">{t('visionWord')}</span>
-              <span>{t('andWord')}</span>
-              <span className="text-cdc-orange">{t('missionWord')}</span>
-              <span>{t('centerWord')}</span>
+              {isRtl ? (
+                <>
+                  <span className="text-cdc-cyan">رؤية</span>
+                  <span>و</span>
+                  <span className="text-cdc-orange">رسالة</span>
+                  <span>المركز</span>
+                </>
+              ) : (
+                <>
+                  <span>Center</span>
+                  <span className="text-cdc-cyan">Vision</span>
+                  <span>&</span>
+                  <span className="text-cdc-orange">Mission</span>
+                </>
+              )}
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
               {t('visionMissionDesc')}
