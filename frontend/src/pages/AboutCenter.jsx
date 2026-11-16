@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import api from '../services/api';
 import { useLanguage } from '../contexts/LanguageContext';
 import { 
   Building2, 
@@ -23,12 +24,47 @@ import {
   ArrowRight,
   MessageCircle,
   Sparkles,
-  Trophy
+  Trophy,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  ExternalLink
 } from 'lucide-react';
+
+const FacebookIcon = ({ className = "w-5 h-5" }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+  </svg>
+);
 
 const AboutCenter = () => {
   const { isRtl, t } = useLanguage();
   const [activeTab, setActiveTab] = useState('overview');
+  const [contact, setContact] = useState({
+    phone_primary: '730116384',
+    phone_secondary: '03-200000',
+    whatsapp_number: '730116384',
+    whatsapp_channel_url: 'https://whatsapp.com',
+    email_primary: 'cdc.hodeidah@ust.edu.ye',
+    facebook_url: 'https://facebook.com',
+    address: 'اليمن - الحديدة - جامعة العلوم والتكنولوجيا - فرع الحديدة',
+    extra_info: 'أوقات الدوام: من السبت إلى الخميس (8:00 ص - 2:00 م)'
+  });
+
+  useEffect(() => {
+    const fetchContact = async () => {
+      try {
+        const res = await api.get('/public/contact-info');
+        if (res.data) {
+          setContact((prev) => ({ ...prev, ...res.data }));
+        }
+      } catch (err) {
+        console.error('Failed to load contact info', err);
+      }
+    };
+    fetchContact();
+  }, []);
 
   const objectives = [
     {
@@ -362,6 +398,155 @@ const AboutCenter = () => {
             })}
           </div>
 
+        </section>
+
+        {/* Section 4: Contact & Social Channels */}
+        <section className="mt-12 bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-6 border-b border-slate-100">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-2 border border-emerald-200">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{isRtl ? 'قنوات التواصل والاستفسارات الرسمية' : 'Official Inquiries & Contact Channels'}</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                {isRtl ? 'تواصل مع مركز الاستشارات والتنمية' : 'Connect with CDC'}
+              </h2>
+              <p className="text-xs text-slate-500 mt-1">
+                {isRtl ? 'يسعدنا الرد على استفساراتكم والتسجيل في الدورات والبرامج الأكاديمية' : 'We are pleased to answer your inquiries and enroll you in specialized training programs'}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
+            
+            {/* Phones Card */}
+            <div className="p-5 rounded-2xl bg-sky-50/60 border border-sky-200/80 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-white text-cdc-cyan shadow-sm flex items-center justify-center mb-3">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900 mb-1">
+                  {isRtl ? 'أرقام الاتصال والتواصل' : 'Contact Numbers'}
+                </h3>
+                <div className="space-y-1.5 text-xs font-mono font-bold text-slate-700">
+                  {contact.phone_primary && (
+                    <a href={`tel:${contact.phone_primary}`} className="block hover:text-cdc-cyan hover:underline">
+                      {contact.phone_primary}
+                    </a>
+                  )}
+                  {contact.phone_secondary && (
+                    <div className="text-slate-600 font-medium">
+                      {contact.phone_secondary}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {contact.phone_primary && (
+                <a
+                  href={`tel:${contact.phone_primary}`}
+                  className="mt-4 inline-flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white text-cdc-cyan font-bold text-xs shadow-xs border border-sky-200 hover:bg-sky-100 transition-all"
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>{isRtl ? 'اتصال مباشر' : 'Call Now'}</span>
+                </a>
+              )}
+            </div>
+
+            {/* WhatsApp Card */}
+            <div className="p-5 rounded-2xl bg-emerald-50/60 border border-emerald-200/80 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-white text-emerald-600 shadow-sm flex items-center justify-center mb-3">
+                  <MessageCircle className="w-5 h-5" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900 mb-1">
+                  {isRtl ? 'واتساب وقناة المركز' : 'WhatsApp & Channel'}
+                </h3>
+                <p className="text-xs text-slate-600 font-mono">
+                  {contact.whatsapp_number ? `واتساب: ${contact.whatsapp_number}` : 'متاح عبر واتساب'}
+                </p>
+                <p className="text-[11px] text-slate-500 mt-1">
+                  {isRtl ? 'لمتابعة أحدث أخبار الدورات والنتائج أولاً بأول' : 'Follow latest course announcements and updates'}
+                </p>
+              </div>
+
+              <div className="mt-4 flex flex-col gap-2">
+                {contact.whatsapp_number && (
+                  <a
+                    href={`https://wa.me/${contact.whatsapp_number.replace(/[^0-9]/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-all active:scale-95"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    <span>{isRtl ? 'محادثة واتساب' : 'Chat on WhatsApp'}</span>
+                  </a>
+                )}
+                {contact.whatsapp_channel_url && (
+                  <a
+                    href={contact.whatsapp_channel_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-white text-emerald-700 font-bold text-[11px] border border-emerald-200 hover:bg-emerald-100/60"
+                  >
+                    <span>{isRtl ? 'الانتقال لقناة واتساب' : 'Visit WhatsApp Channel'}</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {/* Email & Facebook Card */}
+            <div className="p-5 rounded-2xl bg-blue-50/60 border border-blue-200/80 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-white text-blue-600 shadow-sm flex items-center justify-center mb-3">
+                  <FacebookIcon className="w-5 h-5" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900 mb-1">
+                  {isRtl ? 'البريد الإلكتروني والفيسبوك' : 'Email & Social Media'}
+                </h3>
+                {contact.email_primary && (
+                  <a href={`mailto:${contact.email_primary}`} className="block text-xs font-mono text-slate-700 hover:text-blue-600 hover:underline truncate">
+                    {contact.email_primary}
+                  </a>
+                )}
+                {contact.email_secondary && (
+                  <a href={`mailto:${contact.email_secondary}`} className="block text-xs font-mono text-slate-500 hover:underline truncate mt-1">
+                    {contact.email_secondary}
+                  </a>
+                )}
+              </div>
+
+              {contact.facebook_url && (
+                <a
+                  href={contact.facebook_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition-all active:scale-95"
+                >
+                  <FacebookIcon className="w-4 h-4" />
+                  <span>{isRtl ? 'صفحة الفيسبوك الرسمية' : 'Visit Facebook Page'}</span>
+                </a>
+              )}
+            </div>
+
+          </div>
+
+          {/* Location & Extra Info */}
+          <div className="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-600">
+            {contact.address && (
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-red-500 shrink-0" />
+                <span>{contact.address}</span>
+              </div>
+            )}
+            {contact.extra_info && (
+              <div className="flex items-center gap-2 text-slate-500">
+                <Clock className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>{contact.extra_info}</span>
+              </div>
+            )}
+          </div>
         </section>
 
       </main>

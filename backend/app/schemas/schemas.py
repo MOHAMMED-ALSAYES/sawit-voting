@@ -166,3 +166,33 @@ class AuditLogOut(BaseModel):
     created_at: datetime
     class Config:
         from_attributes = True
+
+# Contact Channels & Info
+class ContactSettingBase(BaseModel):
+    phone_primary: Optional[str] = "730116384"
+    phone_secondary: Optional[str] = "03-200000"
+    whatsapp_number: Optional[str] = "730116384"
+    whatsapp_channel_url: Optional[str] = "https://whatsapp.com"
+    email_primary: Optional[str] = "cdc.hodeidah@ust.edu.ye"
+    email_secondary: Optional[str] = None
+    facebook_url: Optional[str] = "https://facebook.com"
+    address: Optional[str] = "اليمن - الحديدة - جامعة العلوم والتكنولوجيا - فرع الحديدة"
+    extra_info: Optional[str] = None
+
+class ContactSettingUpdate(BaseModel):
+    phone_primary: Optional[str] = None
+    phone_secondary: Optional[str] = None
+    whatsapp_number: Optional[str] = None
+    whatsapp_channel_url: Optional[str] = None
+    email_primary: Optional[str] = None
+    email_secondary: Optional[str] = None
+    facebook_url: Optional[str] = None
+    address: Optional[str] = None
+    extra_info: Optional[str] = None
+
+class ContactSettingOut(ContactSettingBase):
+    id: int
+    updated_at: datetime
+    class Config:
+        from_attributes = True
+

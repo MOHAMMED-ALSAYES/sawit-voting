@@ -126,3 +126,18 @@ class AuditLog(Base):
 
     admin = relationship("Admin", back_populates="audit_logs")
 
+class ContactSetting(Base):
+    __tablename__ = "contact_settings"
+
+    id = Column(Integer, primary_key=True, index=True)
+    phone_primary = Column(String(50), nullable=True, default="730116384")
+    phone_secondary = Column(String(100), nullable=True, default="03-200000")
+    whatsapp_number = Column(String(50), nullable=True, default="730116384")
+    whatsapp_channel_url = Column(String(500), nullable=True, default="https://whatsapp.com")
+    email_primary = Column(String(100), nullable=True, default="cdc.hodeidah@ust.edu.ye")
+    email_secondary = Column(String(100), nullable=True)
+    facebook_url = Column(String(500), nullable=True, default="https://facebook.com")
+    address = Column(String(300), nullable=True, default="اليمن - الحديدة - جامعة العلوم والتكنولوجيا - فرع الحديدة")
+    extra_info = Column(Text, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+

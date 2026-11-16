@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.database.session import get_db
-from app.models.models import Admin, Competition, Participant, Student, Vote, AuditLog
-from app.schemas.schemas import AdminLogin, Token, AdminOut, AuditLogOut, AdminProfileUpdate, AdminCreate
+from app.models.models import Admin, Competition, Participant, Student, Vote, AuditLog, ContactSetting
+from app.schemas.schemas import AdminLogin, Token, AdminOut, AuditLogOut, AdminProfileUpdate, AdminCreate, ContactSettingOut, ContactSettingUpdate
 from app.security.security import verify_password, get_password_hash, create_access_token
 from app.security.deps import get_current_admin
 from app.services.audit import log_action
@@ -138,3 +138,45 @@ def get_audit_logs(
 ):
     logs = db.query(AuditLog).order_by(AuditLog.created_at.desc()).limit(limit).all()
     return logs
+
+@router.get("/contact-info", response_model=ContactSettingOut)
+def get_admin_contact_info(
+    db: Session = Depends(get_db),
+    current_admin: Admin = Depends(get_current_admin)
+):
+    contact = db.query(ContactSetting).first()
+    if not contact:
+        contact = ContactSetting(
+            phone_primary="730116384",
+            phone_secondary="03-200000",
+            whatsapp_number="730116384",
+            whatsapp_channel_url="https://whatsapp.com",
+            email_primary="cdc.hodeidah@ust.edu.ye",
+            facebook_url="https://facebook.com",
+            address="اليمن - الحديدة - جامعة العلوم والتكنولوجيا - فرع الحديدة"
+        )
+        db.add(contact)
+        db.commit()
+        db.refresh(contact)
+    return contact
+
+@router.put("/contact-info", response_model=ContactSettingOut)
+def update_contact_info(
+    contact_in: ContactSettingUpdate,
+    db: Session = Depends(get_db),
+    current_admin: Admin = Depends(get_current_admin)
+):
+    contact = db.query(ContactSetting).first()
+    if not contact:
+        contact = ContactSetting()
+        db.add(contact)
+    
+    update_data = contact_in.dict(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(contact, field, value)
+    
+    db.commit()
+    db.refresh(contact)
+    log_action(db, action="تحديث قنوات التواصل وأرقام وهوية المركز", entity_type="ContactSetting", entity_id=contact.id, admin_id=current_admin.id)
+    return contact
+
