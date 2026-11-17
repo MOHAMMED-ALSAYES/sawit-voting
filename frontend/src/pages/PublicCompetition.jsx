@@ -21,10 +21,30 @@ const PublicCompetition = () => {
   const navigate = useNavigate();
   const { t, isRtl } = useLanguage();
 
-  const [competition, setCompetition] = useState(null);
-  const [participants, setParticipants] = useState([]);
+  const [competition, setCompetition] = useState(() => {
+    try {
+      const cached = localStorage.getItem(`sawit_cached_comp_${slug}`);
+      return cached ? JSON.parse(cached) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [participants, setParticipants] = useState(() => {
+    try {
+      const cached = localStorage.getItem(`sawit_cached_parts_${slug}`);
+      return cached ? JSON.parse(cached) : [];
+    } catch {
+      return [];
+    }
+  });
   const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    try {
+      return !localStorage.getItem(`sawit_cached_comp_${slug}`);
+    } catch {
+      return true;
+    }
+  });
   const [error, setError] = useState(null);
 
   // Voting Wizard Steps: 1: Overview & WhatsApp Gateway, 2: Select Student, 3: Success Screen
@@ -57,6 +77,8 @@ const PublicCompetition = () => {
 
         setCompetition(compRes.data);
         setParticipants(partsRes.data);
+        localStorage.setItem(`sawit_cached_comp_${slug}`, JSON.stringify(compRes.data));
+        localStorage.setItem(`sawit_cached_parts_${slug}`, JSON.stringify(partsRes.data));
 
         // Check vote status
         const voterId = getVoterIdentifier();

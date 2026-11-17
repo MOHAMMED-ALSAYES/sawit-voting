@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 from app.database.session import get_db
 from app.models.models import Competition, Participant, ContactSetting
@@ -8,7 +8,8 @@ from app.schemas.schemas import PublicCompetitionOut, PublicParticipantOut, Cont
 router = APIRouter(prefix="/public", tags=["Public API"])
 
 @router.get("/contact-info", response_model=ContactSettingOut)
-def get_public_contact_info(db: Session = Depends(get_db)):
+def get_public_contact_info(response: Response, db: Session = Depends(get_db)):
+    response.headers["Cache-Control"] = "public, max-age=30, s-maxage=60, stale-while-revalidate=300"
     contact = db.query(ContactSetting).first()
     if not contact:
         contact = ContactSetting(
@@ -26,8 +27,9 @@ def get_public_contact_info(db: Session = Depends(get_db)):
     return contact
 
 @router.get("/competitions", response_model=List[PublicCompetitionOut])
-def get_all_public_competitions(db: Session = Depends(get_db)):
-    # جلب جميع المسابقات النشطة أو المتاحة للتصويت تلقائياً
+def get_all_public_competitions(response: Response, db: Session = Depends(get_db)):
+    # Cache at Vercel Edge for high-speed public access
+    response.headers["Cache-Control"] = "public, max-age=10, s-maxage=20, stale-while-revalidate=60"
     comps = (
         db.query(Competition)
         .filter(Competition.status.in_(["active", "scheduled"]))
@@ -37,14 +39,16 @@ def get_all_public_competitions(db: Session = Depends(get_db)):
     return comps
 
 @router.get("/competitions/{slug}", response_model=PublicCompetitionOut)
-def get_public_competition(slug: str, db: Session = Depends(get_db)):
+def get_public_competition(slug: str, response: Response, db: Session = Depends(get_db)):
+    response.headers["Cache-Control"] = "public, max-age=10, s-maxage=20, stale-while-revalidate=60"
     comp = db.query(Competition).filter(Competition.slug == slug).first()
     if not comp:
         raise HTTPException(status_code=404, detail="المسابقة غير موجودة")
     return comp
 
 @router.get("/competitions/{slug}/participants", response_model=List[PublicParticipantOut])
-def get_public_participants(slug: str, db: Session = Depends(get_db)):
+def get_public_participants(slug: str, response: Response, db: Session = Depends(get_db)):
+    response.headers["Cache-Control"] = "public, max-age=10, s-maxage=20, stale-while-revalidate=60"
     comp = db.query(Competition).filter(Competition.slug == slug).first()
     if not comp:
         raise HTTPException(status_code=404, detail="المسابقة غير موجودة")

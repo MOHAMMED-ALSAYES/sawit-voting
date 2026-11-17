@@ -39,15 +39,21 @@ const FacebookIcon = ({ className = "w-5 h-5" }) => (
 const AboutCenter = () => {
   const { isRtl, t } = useLanguage();
   const [activeTab, setActiveTab] = useState('overview');
-  const [contact, setContact] = useState({
-    phone_primary: '730116384',
-    phone_secondary: '03-200000',
-    whatsapp_number: '730116384',
-    whatsapp_channel_url: 'https://whatsapp.com',
-    email_primary: 'cdc.hodeidah@ust.edu.ye',
-    facebook_url: 'https://facebook.com',
-    address: 'اليمن - الحديدة - جامعة العلوم والتكنولوجيا - فرع الحديدة',
-    extra_info: 'أوقات الدوام: من السبت إلى الخميس (8:00 ص - 2:00 م)'
+  const [contact, setContact] = useState(() => {
+    try {
+      const cached = localStorage.getItem('sawit_cached_contact_info');
+      if (cached) return JSON.parse(cached);
+    } catch {}
+    return {
+      phone_primary: '730116384',
+      phone_secondary: '03-200000',
+      whatsapp_number: '730116384',
+      whatsapp_channel_url: 'https://whatsapp.com',
+      email_primary: 'cdc.hodeidah@ust.edu.ye',
+      facebook_url: 'https://facebook.com',
+      address: 'اليمن - الحديدة - جامعة العلوم والتكنولوجيا - فرع الحديدة',
+      extra_info: 'أوقات الدوام: من السبت إلى الخميس (8:00 ص - 2:00 م)'
+    };
   });
 
   useEffect(() => {
@@ -55,7 +61,11 @@ const AboutCenter = () => {
       try {
         const res = await api.get('/public/contact-info');
         if (res.data) {
-          setContact((prev) => ({ ...prev, ...res.data }));
+          setContact((prev) => {
+            const updated = { ...prev, ...res.data };
+            localStorage.setItem('sawit_cached_contact_info', JSON.stringify(updated));
+            return updated;
+          });
         }
       } catch (err) {
         console.error('Failed to load contact info', err);

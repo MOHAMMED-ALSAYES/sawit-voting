@@ -18,14 +18,29 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 const Home = () => {
   const { isRtl, t } = useLanguage();
-  const [competitions, setCompetitions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Instant Cache-First pattern: load from localStorage in 0ms, then refresh in background
+  const [competitions, setCompetitions] = useState(() => {
+    try {
+      const cached = localStorage.getItem('sawit_cached_public_competitions');
+      return cached ? JSON.parse(cached) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [loading, setLoading] = useState(() => {
+    try {
+      return !localStorage.getItem('sawit_cached_public_competitions');
+    } catch {
+      return true;
+    }
+  });
 
   useEffect(() => {
     const fetchCompetitions = async () => {
       try {
         const res = await api.get('/public/competitions');
         setCompetitions(res.data);
+        localStorage.setItem('sawit_cached_public_competitions', JSON.stringify(res.data));
       } catch (err) {
         console.error(err);
       } finally {
@@ -80,21 +95,17 @@ const Home = () => {
           <span className="w-2 h-2 rounded-full bg-cdc-cyan"></span>
         </div>
 
-        {/* Center Glowing Logo */}
-        <div className="flex justify-center mb-6">
-          <div className="relative group">
-            {/* Ambient Multi-layer Aura Glow */}
-            <div className="absolute -inset-3 bg-gradient-to-r from-cdc-cyan via-sky-400 to-cdc-orange rounded-3xl blur-2xl opacity-65 group-hover:opacity-90 transition-all duration-700 animate-pulse"></div>
-            <div className="absolute -inset-1 bg-gradient-to-r from-cdc-orange/40 via-amber-400/30 to-cdc-cyan/40 rounded-3xl blur-md"></div>
-
-            {/* Logo Glass Container */}
-            <div className="relative p-3.5 sm:p-4 rounded-3xl bg-white/95 backdrop-blur-xl border border-white/80 shadow-xl shadow-sky-500/10 flex items-center justify-center transition-all duration-300 group-hover:scale-105">
-              <img 
-                src="/logo-cdc.png" 
-                alt="شعار مركز الاستشارات والتنمية" 
-                className="h-16 sm:h-20 md:h-24 w-auto object-contain filter drop-shadow-md" 
-              />
-            </div>
+        {/* Center Glowing Logo: No background box, pure edge silhouette glow, enlarged */}
+        <div className="flex justify-center mb-6 sm:mb-8">
+          <div className="relative inline-flex items-center justify-center group cursor-pointer">
+            <img 
+              src="/logo-cdc.png" 
+              alt="شعار مركز الاستشارات والتنمية" 
+              className="h-24 sm:h-32 md:h-36 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+              style={{
+                filter: 'drop-shadow(0 0 16px rgba(2, 132, 199, 0.75)) drop-shadow(0 0 32px rgba(234, 88, 12, 0.55)) drop-shadow(0 0 48px rgba(2, 132, 199, 0.35))'
+              }}
+            />
           </div>
         </div>
 

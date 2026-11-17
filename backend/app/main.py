@@ -7,35 +7,41 @@ from app.models.models import Admin, ContactSetting
 from app.security.security import get_password_hash
 from sqlalchemy.orm import Session
 
-# Create all database tables on startup if they don't exist
-Base.metadata.create_all(bind=engine)
+# Database initialization:
+# In production on Vercel Serverless, tables and seed data already exist in Supabase.
+# Skipping Base.metadata.create_all on every serverless import avoids 2+ seconds of cold-start delay.
+import os
 
-# Auto seed default admin & contact settings if not existing
-with Session(engine) as db:
-    admin_exists = db.query(Admin).first()
-    if not admin_exists:
-        default_admin = Admin(
-            username="admin",
-            email="admin@sawit.ust.edu",
-            password_hash=get_password_hash("admin123"),
-            is_active=True
-        )
-        db.add(default_admin)
-        db.commit()
+if os.getenv("RUN_DB_MIGRATIONS", "false").lower() == "true":
+    try:
+        Base.metadata.create_all(bind=engine)
+        with Session(engine) as db:
+            admin_exists = db.query(Admin).first()
+            if not admin_exists:
+                default_admin = Admin(
+                    username="admin",
+                    email="admin@sawit.ust.edu",
+                    password_hash=get_password_hash("admin123"),
+                    is_active=True
+                )
+                db.add(default_admin)
+                db.commit()
 
-    contact_exists = db.query(ContactSetting).first()
-    if not contact_exists:
-        default_contact = ContactSetting(
-            phone_primary="730116384",
-            phone_secondary="03-200000",
-            whatsapp_number="730116384",
-            whatsapp_channel_url="https://whatsapp.com",
-            email_primary="cdc.hodeidah@ust.edu.ye",
-            facebook_url="https://facebook.com",
-            address="اليمن - الحديدة - جامعة العلوم والتكنولوجيا - فرع الحديدة"
-        )
-        db.add(default_contact)
-        db.commit()
+            contact_exists = db.query(ContactSetting).first()
+            if not contact_exists:
+                default_contact = ContactSetting(
+                    phone_primary="730116384",
+                    phone_secondary="03-200000",
+                    whatsapp_number="730116384",
+                    whatsapp_channel_url="https://whatsapp.com",
+                    email_primary="cdc.hodeidah@ust.edu.ye",
+                    facebook_url="https://facebook.com",
+                    address="اليمن - الحديدة - جامعة العلوم والتكنولوجيا - فرع الحديدة"
+                )
+                db.add(default_contact)
+                db.commit()
+    except Exception as e:
+        print(f"Migration check skipped: {e}")
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
