@@ -20,8 +20,6 @@ import {
   TrendingUp, 
   Cpu, 
   CheckCircle2, 
-  ArrowLeft, 
-  ArrowRight,
   MessageCircle,
   Sparkles,
   Trophy,
@@ -164,34 +162,28 @@ const AboutCenter = () => {
 
       <main className="flex-1 max-w-6xl mx-auto px-4 sm:px-6 w-full pb-16">
         
-        {/* Breadcrumb / Back Link */}
-        <div className="mb-4 sm:mb-6 flex flex-row items-center justify-between gap-2">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-slate-500 hover:text-cdc-cyan transition-colors truncate"
-          >
-            {isRtl ? <ArrowRight className="w-3.5 h-3.5 shrink-0" /> : <ArrowLeft className="w-3.5 h-3.5 shrink-0" />}
-            <span>{isRtl ? 'العودة للرئيسية ومسابقات التصويت' : 'Back to Home & Competitions'}</span>
-          </Link>
-
-          <span className="text-[10px] sm:text-xs font-semibold text-cdc-orange bg-orange-50 px-2.5 py-1 rounded-full border border-orange-200 shrink-0">
-            {isRtl ? 'فرع الحديدة' : 'Hodeidah Branch'}
-          </span>
-        </div>
-
         {/* Hero Banner */}
-        <section className="bg-gradient-to-br from-slate-900 via-ust-navy to-slate-900 text-white rounded-3xl p-5 sm:p-10 shadow-xl relative overflow-hidden mb-8 sm:mb-10">
+        <section className="bg-gradient-to-br from-slate-900 via-ust-navy to-slate-900 text-white rounded-3xl p-5 sm:p-8 md:p-10 shadow-xl relative overflow-hidden mb-8 sm:mb-10">
           <div className="absolute top-0 right-0 w-64 h-64 bg-cdc-cyan/20 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-cdc-orange/20 rounded-full blur-3xl pointer-events-none"></div>
 
-          <div className="relative z-10 flex flex-col sm:flex-row sm:items-start justify-between gap-5">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-cdc-cyan text-[11px] sm:text-xs font-bold mb-3 sm:mb-4 backdrop-blur-md border border-white/10">
-                <Building2 className="w-3.5 h-3.5" />
-                <span>{isRtl ? 'الدليل التعريفي والبرامج المعتمدة' : 'Official Center Profile & Accredited Programs'}</span>
-              </div>
+          <div className="relative z-10 max-w-3xl">
+            {/* Tag Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-cdc-cyan text-[11px] sm:text-xs font-bold mb-4 backdrop-blur-md border border-white/10">
+              <Building2 className="w-3.5 h-3.5 text-cdc-cyan" />
+              <span>{isRtl ? 'الدليل التعريفي والبرامج المعتمدة' : 'Official Center Profile & Accredited Programs'}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-cdc-orange"></span>
+              <span className="text-cdc-orange">{isRtl ? 'فرع الحديدة' : 'Hodeidah Branch'}</span>
+            </div>
 
-              <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-white leading-tight mb-3 sm:mb-4 tracking-tight">
+            {/* Title with Logo placed right beside it */}
+            <div className="flex items-center gap-3 sm:gap-4 md:gap-5 mb-4">
+              <img 
+                src="/logo-cdc.png" 
+                alt="شعار مركز الاستشارات والتنمية" 
+                className="h-14 sm:h-20 md:h-24 w-auto object-contain shrink-0 filter drop-shadow" 
+              />
+              <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-white leading-tight tracking-tight">
                 {isRtl ? (
                   <>
                     مركز الاستشارات والتنمية <br />
@@ -204,32 +196,14 @@ const AboutCenter = () => {
                   </>
                 )}
               </h1>
-
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-                {isRtl 
-                  ? 'الذراع الأكاديمي والاستشاري الرائد لبناء وتطوير القدرات وتأهيل الكفاءات المجتمعية والمؤسسية وفق أرقى معايير الجودة العالمية والتميز المستدام.'
-                  : 'The premier academic and consulting arm committed to cultivating professional capacities and empowering institutions with world-class excellence.'
-                }
-              </p>
             </div>
 
-            {/* CDC Center Logo */}
-            <div className="shrink-0 flex items-center gap-3 bg-white/95 text-slate-900 p-2.5 sm:p-3.5 rounded-2xl shadow-lg border border-white/20 w-fit self-start sm:self-center">
-              <img 
-                src="/logo-cdc.png" 
-                alt="شعار مركز الاستشارات والتنمية" 
-                className="h-10 sm:h-14 w-auto object-contain" 
-              />
-              <div className="text-start">
-                <span className="text-[10px] font-black text-cdc-cyan tracking-wider uppercase block">CDC UST</span>
-                <span className="text-xs sm:text-sm font-black text-ust-navy block leading-tight">
-                  {isRtl ? 'مركز الاستشارات' : 'Consultations &'}
-                </span>
-                <span className="text-[10px] sm:text-xs font-bold text-slate-600 block">
-                  {isRtl ? 'والتنمية' : 'Development Center'}
-                </span>
-              </div>
-            </div>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+              {isRtl 
+                ? 'الذراع الأكاديمي والاستشاري الرائد لبناء وتطوير القدرات وتأهيل الكفاءات المجتمعية والمؤسسية وفق أرقى معايير الجودة العالمية والتميز المستدام.'
+                : 'The premier academic and consulting arm committed to cultivating professional capacities and empowering institutions with world-class excellence.'
+              }
+            </p>
           </div>
 
           <div className="mt-5 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 text-xs font-bold">
