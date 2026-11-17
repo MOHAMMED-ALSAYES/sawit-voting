@@ -7,7 +7,6 @@ import {
   ArrowLeft, 
   ArrowRight, 
   Calendar, 
-  Award, 
   ShieldCheck, 
   Compass, 
   GraduationCap, 
@@ -52,13 +51,6 @@ const Home = () => {
       bg: 'bg-orange-50 border-orange-200/60'
     },
     {
-      title: t('srv3Title'),
-      desc: t('srv3Desc'),
-      icon: Trophy,
-      color: 'text-amber-500',
-      bg: 'bg-amber-50 border-amber-200/60'
-    },
-    {
       title: t('srv4Title'),
       desc: t('srv4Desc'),
       icon: ShieldCheck,
@@ -82,14 +74,32 @@ const Home = () => {
       <section className="max-w-6xl mx-auto px-4 pt-10 sm:pt-14 pb-12 text-center relative z-10">
         
         {/* Glow Badge */}
-        <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-white/95 backdrop-blur-md shadow-sm border border-slate-200/80 text-[11px] sm:text-xs font-bold text-slate-800 mb-6 sm:mb-8 transition-transform hover:scale-105">
+        <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-white/95 backdrop-blur-md shadow-sm border border-slate-200/80 text-[11px] sm:text-xs font-bold text-slate-800 mb-6 transition-transform hover:scale-105">
           <Sparkles className="w-4 h-4 text-cdc-orange" />
           <span>{t('heroBadge')}</span>
           <span className="w-2 h-2 rounded-full bg-cdc-cyan"></span>
         </div>
 
+        {/* Center Glowing Logo */}
+        <div className="flex justify-center mb-6">
+          <div className="relative group">
+            {/* Ambient Multi-layer Aura Glow */}
+            <div className="absolute -inset-3 bg-gradient-to-r from-cdc-cyan via-sky-400 to-cdc-orange rounded-3xl blur-2xl opacity-65 group-hover:opacity-90 transition-all duration-700 animate-pulse"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-cdc-orange/40 via-amber-400/30 to-cdc-cyan/40 rounded-3xl blur-md"></div>
+
+            {/* Logo Glass Container */}
+            <div className="relative p-3.5 sm:p-4 rounded-3xl bg-white/95 backdrop-blur-xl border border-white/80 shadow-xl shadow-sky-500/10 flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+              <img 
+                src="/logo-cdc.png" 
+                alt="شعار مركز الاستشارات والتنمية" 
+                className="h-16 sm:h-20 md:h-24 w-auto object-contain filter drop-shadow-md" 
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Hero Title: Spotlight on Center Name */}
-        <div className="space-y-3 mb-6">
+        <div className="space-y-3 mb-2 sm:mb-4">
           <p className="text-base sm:text-xl font-bold text-slate-500">
             {t('welcomeTo')}
           </p>
@@ -103,26 +113,6 @@ const Home = () => {
               {t('universityMainTitle')}
             </span>
           </h1>
-        </div>
-
-        <p className="max-w-3xl mx-auto text-sm sm:text-base text-slate-600 leading-relaxed mb-8 sm:mb-10 font-medium px-2">
-          {t('heroDesc')}
-        </p>
-
-        {/* Feature Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm font-bold text-slate-700">
-          <div className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all">
-            <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-cdc-cyan" />
-            <span>{t('pillOneVote')}</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all">
-            <Award className="w-4 h-4 sm:w-5 sm:h-5 text-cdc-orange" />
-            <span>{t('pillSecretVotes')}</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all">
-            <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" />
-            <span>{t('pillWheel')}</span>
-          </div>
         </div>
       </section>
 
@@ -197,7 +187,7 @@ const Home = () => {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {cdcServices.map((service, idx) => {
             const Icon = service.icon;
             return (
