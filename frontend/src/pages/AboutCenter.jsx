@@ -184,32 +184,52 @@ const AboutCenter = () => {
           <div className="absolute top-0 right-0 w-64 h-64 bg-cdc-cyan/20 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-cdc-orange/20 rounded-full blur-3xl pointer-events-none"></div>
 
-          <div className="relative z-10 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-cdc-cyan text-[11px] sm:text-xs font-bold mb-3 sm:mb-4 backdrop-blur-md border border-white/10">
-              <Building2 className="w-3.5 h-3.5" />
-              <span>{isRtl ? 'الدليل التعريفي والبرامج المعتمدة' : 'Official Center Profile & Accredited Programs'}</span>
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-start justify-between gap-5">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-cdc-cyan text-[11px] sm:text-xs font-bold mb-3 sm:mb-4 backdrop-blur-md border border-white/10">
+                <Building2 className="w-3.5 h-3.5" />
+                <span>{isRtl ? 'الدليل التعريفي والبرامج المعتمدة' : 'Official Center Profile & Accredited Programs'}</span>
+              </div>
+
+              <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-white leading-tight mb-3 sm:mb-4 tracking-tight">
+                {isRtl ? (
+                  <>
+                    مركز الاستشارات والتنمية <br />
+                    <span className="text-cdc-orange">جامعة العلوم والتكنولوجيا</span>
+                  </>
+                ) : (
+                  <>
+                    Consultations & Development Center <br />
+                    <span className="text-cdc-orange">University of Science & Technology</span>
+                  </>
+                )}
+              </h1>
+
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
+                {isRtl 
+                  ? 'الذراع الأكاديمي والاستشاري الرائد لبناء وتطوير القدرات وتأهيل الكفاءات المجتمعية والمؤسسية وفق أرقى معايير الجودة العالمية والتميز المستدام.'
+                  : 'The premier academic and consulting arm committed to cultivating professional capacities and empowering institutions with world-class excellence.'
+                }
+              </p>
             </div>
 
-            <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-white leading-tight mb-3 sm:mb-4 tracking-tight">
-              {isRtl ? (
-                <>
-                  مركز الاستشارات والتنمية <br />
-                  <span className="text-cdc-orange">جامعة العلوم والتكنولوجيا</span>
-                </>
-              ) : (
-                <>
-                  Consultations & Development Center <br />
-                  <span className="text-cdc-orange">University of Science & Technology</span>
-                </>
-              )}
-            </h1>
-
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
-              {isRtl 
-                ? 'الذراع الأكاديمي والاستشاري الرائد لبناء وتطوير القدرات وتأهيل الكفاءات المجتمعية والمؤسسية وفق أرقى معايير الجودة العالمية والتميز المستدام.'
-                : 'The premier academic and consulting arm committed to cultivating professional capacities and empowering institutions with world-class excellence.'
-              }
-            </p>
+            {/* CDC Center Logo */}
+            <div className="shrink-0 flex items-center gap-3 bg-white/95 text-slate-900 p-2.5 sm:p-3.5 rounded-2xl shadow-lg border border-white/20 w-fit self-start sm:self-center">
+              <img 
+                src="/logo-cdc.png" 
+                alt="شعار مركز الاستشارات والتنمية" 
+                className="h-10 sm:h-14 w-auto object-contain" 
+              />
+              <div className="text-start">
+                <span className="text-[10px] font-black text-cdc-cyan tracking-wider uppercase block">CDC UST</span>
+                <span className="text-xs sm:text-sm font-black text-ust-navy block leading-tight">
+                  {isRtl ? 'مركز الاستشارات' : 'Consultations &'}
+                </span>
+                <span className="text-[10px] sm:text-xs font-bold text-slate-600 block">
+                  {isRtl ? 'والتنمية' : 'Development Center'}
+                </span>
+              </div>
+            </div>
           </div>
 
           <div className="mt-5 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 text-xs font-bold">
@@ -221,15 +241,19 @@ const AboutCenter = () => {
               <span>{isRtl ? 'عرض المسابقات والتصويت' : 'View Competitions & Voting'}</span>
             </Link>
 
-            <a
-              href="https://wa.me/967730116384"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all border border-white/15 text-xs font-bold"
+            <button
+              type="button"
+              onClick={() => {
+                const el = document.getElementById('contact-section');
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all border border-white/15 text-xs font-bold active:scale-95 cursor-pointer"
             >
-              <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+              <Phone className="w-3.5 h-3.5 text-emerald-400" />
               <span>{isRtl ? 'التواصل والاستفسارات' : 'Contact & Inquiries'}</span>
-            </a>
+            </button>
           </div>
         </section>
 
@@ -401,7 +425,7 @@ const AboutCenter = () => {
         </section>
 
         {/* Section 4: Contact & Social Channels */}
-        <section className="mt-12 bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200">
+        <section id="contact-section" className="mt-12 bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 scroll-mt-24">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-6 border-b border-slate-100">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-2 border border-emerald-200">
