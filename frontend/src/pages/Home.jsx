@@ -68,7 +68,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 relative overflow-hidden flex flex-col pt-20">
+    <div className="min-h-screen bg-slate-50 relative overflow-hidden flex flex-col pt-16 sm:pt-20">
       
       {/* Dynamic Background Glow Orbs */}
       <div className="glow-orb-cyan -top-20 -right-20 animate-pulse"></div>
@@ -163,7 +163,7 @@ const Home = () => {
 
               <a
                 href={`/c/${c.slug}`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-cdc-cyan to-sky-600 hover:from-cdc-cyan-hover hover:to-sky-700 text-white font-extrabold text-sm shadow-md hover:shadow-lg transition-all active:scale-95 shrink-0"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-7 sm:py-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cdc-cyan to-sky-600 hover:from-cdc-cyan-hover hover:to-sky-700 text-white font-bold sm:font-extrabold text-xs sm:text-sm shadow-sm hover:shadow-md transition-all active:scale-95 shrink-0"
               >
                 <span>{t('goToVotePage')}</span>
                 {isRtl ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}

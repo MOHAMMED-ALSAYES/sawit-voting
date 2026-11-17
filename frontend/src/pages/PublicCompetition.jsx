@@ -150,7 +150,7 @@ const PublicCompetition = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-sky-50/30 to-slate-100 flex flex-col pt-24 sm:pt-28 pb-12">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-sky-50/30 to-slate-100 flex flex-col pt-20 sm:pt-24 pb-12">
       <Navbar />
 
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6">
@@ -215,7 +215,7 @@ const PublicCompetition = () => {
                 <div className="w-full sm:w-auto flex flex-col gap-2">
                   <button
                     onClick={handleOpenWhatsapp}
-                    className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm shadow-md transition-all active:scale-95 text-white ${
+                    className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm shadow-sm hover:shadow-md transition-all active:scale-95 text-white ${
                       whatsappVisited 
                         ? 'bg-emerald-700 hover:bg-emerald-800' 
                         : whatsappWarning 
@@ -255,7 +255,7 @@ const PublicCompetition = () => {
               <div className="mt-8 pt-6 border-t border-slate-200/80 flex justify-end">
                 <button
                   onClick={handleContinueClick}
-                  className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm transition-all shadow-md ${
+                  className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-7 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm ${
                     whatsappVisited
                       ? 'bg-cdc-cyan hover:bg-cdc-cyan-hover text-white scale-100 shadow-sky-200'
                       : 'bg-slate-800 hover:bg-slate-900 text-white'
@@ -366,9 +366,9 @@ const PublicCompetition = () => {
               <button
                 onClick={() => setShowConfirmModal(true)}
                 disabled={!selectedParticipant}
-                className={`inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm shadow-md transition-all ${
+                className={`inline-flex items-center gap-2 px-5 py-2.5 sm:px-7 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm shadow-sm transition-all ${
                   selectedParticipant
-                    ? 'bg-cdc-orange hover:bg-cdc-orange-hover text-white scale-100'
+                    ? 'bg-cdc-orange hover:bg-cdc-orange-hover text-white scale-100 shadow-orange-200'
                     : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                 }`}
               >
